@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>键盘输入表格内容</title>
+    <style type="text/css">
+        div{
+            background-color: bisque;
+            margin: 20px auto;
+            width: 600px;
+            height: 300px;
+            text-align: center;
+            padding: 20px
+        }
+        p{
+            color: chocolate;
+            font-size: 16px
+        }
+        hr{
+            color: blue;
+            font-size: 16px
+        }
+        table{
+            border: outset 2px black;
+            margin: 0 auto;
+            width: 50%;
+        }
+        td{
+            border: solid 1px;
+        }
+    </style>
+    <script type="text/javascript">
+      function input(tdID){
+          var td = document.getElementById(tdID);
+          var spanOld;//列中span原有的内容
+          var spanNode; //span标签对象
+          var inputNode; //input标签对象
+          var td_childs = td.childNodes;
+          for(var i=0;i<td_childs.length;i++){
+              if(td_childs[i].nodeName=="SPAN"){
+                  spanNode = td_childs[i];
+                  spanOld = td_childs[i].innerText;
+                  td_childs[i].style.display = "none";
+              }
+              if(td_childs[i].nodeName=="INPUT"){
+                  inputNode = td_childs[i];
+                  td_childs[i].value=spanOld;
+                  td_childs[i].style.display="block";
+              }
+          }
+
+          var spanNew ; //列中span新的内容
+//          document.getElementById("text1").onkeydown=function(event){
+          inputNode.onkeydown = function(event){
+              var kc = window.event ? event.keyCode : event.which; //兼容不同浏览器
+//            var kc = window.event||event;
+                  if(kc==13){
+                  spanNew = inputNode.value;
+                  inputNode.style.display = "none";
+                  spanNode.innerText = spanNew;
+                  spanNode.style.display = "block";
+              }
+          }
+      }
+
+    </script>
+</head>
+<body>
+    <div>
+        <p>键盘输入表格内容</p>
+        <hr/>
+        <br>
+        <table>
+            <tr>
+                <td id="td1" onclick="input('td1')">
+                    <span>123</span>
+                    <input type="text" style="display: none" >
+                </td>
+
+                <td id="td2" onclick="input('td2')">
+                    <span>456</span>
+                    <input type="text" style="display: none">
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>省份城市区</title>
+    <style type="text/css">
+        div{
+            background-color: bisque;
+            margin: 20px auto;
+            width: 600px;
+            height: 300px;
+            text-align: center;
+            padding: 20px
+        }
+        p{
+            color: chocolate;
+            font-size: 16px
+        }
+        hr{
+            color: blue;
+            font-size: 16px
+        }
+        select{
+            border: outset 1px;
+            width: 128px;
+        }
+    </style>
+    <script type="text/javascript">
+        //省份下的城市数组
+        var cityList = new Array();
+        cityList["江苏省"] = ["南京","镇江","常州","无锡","苏州","扬州"];
+        cityList["安徽省"] = ["合肥","芜湖","淮南","亳州","阜阳","淮北","宿州"];
+        cityList["浙江省"] = ["杭州","嘉兴","湖州","宁波","金华","温州","丽水"];
+        cityList["山东省"] = ["济南","青岛","淄博","枣庄","东营","烟台"];
+        cityList["北京"] = ["北京市"];
+        //城市下的市区数组
+        var districtList = new Array();
+        districtList["南京"] = ["玄武区", "秦淮区", "建邺区", "鼓楼区", " 浦口区","栖霞区",  "雨花台区 ","江宁区", "六合区"];
+
+        function changeCity(){
+            var province = document.getElementById("province"); //省份下拉框对象
+            var provinceValue = province.value; //省份名称
+//            var province = document.getElementById("province").selectedOptions.value;  //错
+            var city = document.getElementById("city"); //城市下拉框对象
+            city.options.length=0; //清空城市选项
+            //添加省份对应的城市选项
+            if(provinceValue=="==请选择省份=="){
+                var cityValue = new Option("==请选择城市==","==请选择城市==");
+                city.add(cityValue);
+            }else{
+                for(var i in cityList[provinceValue]){
+                    var cityValue = new Option(cityList[provinceValue][i],cityList[provinceValue][i]);
+                    city.add(cityValue);
+                }
+            }
+        }
+
+        function changeDistrict(){
+            var districtValue; //市区名称
+            //添加城市对应的市区选项
+            var city = document.getElementById("city"); //城市下拉框对象
+            var cityValue = city.value; //城市名称
+            var district = document.getElementById("district"); //市区下拉框对象
+            district.options.length=0; //清空市区选项
+            if(cityValue=="==请选择城市=="){
+                districtValue = new Option("==请选择市区==","==请选择市区==");
+            }else{
+                for(var j in districtList[cityValue]){
+                    districtValue = new Option(districtList[cityValue][j],districtList[cityValue][j]);
+                    district.add(districtValue);
+                }
+            }
+        }
+    </script>
+
+</head>
+<body>
+    <div>
+        <p>省份城市选择</p>
+        <hr/>
+        <br>
+        <span>
+            <span>省份</span>
+            <select id="province" onchange="changeCity()">
+                <option>==请选择省份==</option>
+                <option value="江苏省">江苏省</option>
+                <option value="安徽省">安徽省</option>
+                <option value="浙江省">浙江省</option>
+                <option value="山东省">山东省</option>
+                <option value="北京">北京(直辖市)</option>
+            </select>
+            <span>城市</span>
+            <select id="city" onchange="changeDistrict()">
+                <option value="==请选择城市==">==请选择城市==</option>
+            </select>
+             <span>市区</span>
+            <select id="district">
+                <option>==请选择市区==</option>
+            </select>
+        </span>
+    </div>
+</body>
+</html>
